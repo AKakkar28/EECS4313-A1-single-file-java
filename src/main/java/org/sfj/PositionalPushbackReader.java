@@ -155,7 +155,7 @@ public class PositionalPushbackReader extends LineNumberReader {
 
   @Override
   public boolean ready() throws IOException {
-    return !pushback.isEmpty() || super.ready();
+    return super.ready() ;
   }
 
   @Override
@@ -163,7 +163,6 @@ public class PositionalPushbackReader extends LineNumberReader {
     pushback.clear();
     latestReadLineNumber = 0;
     latestReadPosInLine = 0;
-    super.reset();
   }
 
   @Override
