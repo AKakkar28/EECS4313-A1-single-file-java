@@ -22,7 +22,8 @@ public class PegLegParserLLMTest {
     public void testTimesOf_MinNotMet() {
         PegLegParser<Object> parser = new PegLegParser<>();
         parser.using("aa");
-        RuleReturn<Object> result = parser.timesOf(3, "a").rule(); // Expecting to match 'a' at least 3 times
+        // RuleReturn<Object> result = parser.timesOf(3,3, "a").rule();  Old code
+        RuleReturn<Object> result = parser.timesOf(3, "a").rule(); 			// Fixed code: Expecting to match 'a' at least 3 times
         assertFalse(result.matched());
     }
 
@@ -32,15 +33,22 @@ public class PegLegParserLLMTest {
     @Test
     public void testTimesOf_ExactMatch() {
         PegLegParser<Object> parser = new PegLegParser<>();
+
+        // Test with exact match
         parser.using("aaa");
-        RuleReturn<Object> result = parser.timesOf(3, "a").rule(); // Exactly 3 'a's
-        assertTrue(result.matched());
+        RuleReturn<Object> result = parser.timesOf(3, "a").rule();
+        assertTrue("Expected match for exactly 3 'a's", result.matched());
+
+        // Test with a non-matching sequence
+        parser.using("aab"); // Manually added new cases
+        result = parser.timesOf(3, "a").rule();
+        assertFalse("Expected failure when pattern includes 'b'", result.matched());
+
+        // Test with fewer characters (should fail)
+        parser.using("aa");  // Manual addition
+        result = parser.timesOf(3, "a").rule();
+        assertFalse("Expected failure for only 2 'a's when expecting 3", result.matched());
     }
-
-    /**
-     * Test varying flags for the ruleReturn method.
-     */
-
 
     /**
      * Test character range boundary conditions.
@@ -82,23 +90,28 @@ public class PegLegParserLLMTest {
     }
 
 
-    @Test
-    public void testNothing() {
-        PegLegParser<Object> parser = new PegLegParser<>();
-        parser.using("any input");
-        PegLegParser.RuleReturn<Object> result = parser.nothing().rule();
-        assertFalse(result.matched());
-    }
+//    @Test
+//    public void testNothing() {
+//        PegLegParser<Object> parser = new PegLegParser<>();
+//        parser.using("any input");
+//        PegLegParser.RuleReturn<Object> result = parser.nothing().rule();
+//        assertFalse(result.matched());
+//    }
 
-    /**
-     * Test that empty() always succeeds.
-     */
+//    @Test
+//    public void testEmpty() {
+//        PegLegParser<Object> parser = new PegLegParser<>();
+//        parser.using("any input");
+//        PegLegParser.RuleReturn<Object> result = parser.empty().rule();
+//        assertTrue(result.matched());
+//    }
+
     @Test
-    public void testEmpty() {
+    public void testEmptyAndNothingCombined() {
         PegLegParser<Object> parser = new PegLegParser<>();
         parser.using("any input");
-        PegLegParser.RuleReturn<Object> result = parser.empty().rule();
-        assertTrue(result.matched());
+        assertFalse(parser.nothing().rule().matched());
+        assertTrue(parser.empty().rule().matched());
     }
 
     @Test
