@@ -535,7 +535,7 @@ public class DrawDot {
   public static class Arrow extends BaseAttributable<Arrow> implements Colored<Arrow>, Labeled<Arrow> {
     private final Arrows type;
 
-    private Arrow(Arrows type) {
+    Arrow(Arrows type) {
       this.type = type;
     }
 
