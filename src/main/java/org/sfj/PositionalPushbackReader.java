@@ -46,7 +46,7 @@ public class PositionalPushbackReader extends LineNumberReader {
     }
   }
 
-  private static class IntQueue {
+  static class IntQueue {
     private IntNode head = null;
     private IntNode tail = null;
 
