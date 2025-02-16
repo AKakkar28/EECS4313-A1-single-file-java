@@ -179,10 +179,7 @@ public class PositionalPushbackReaderManualTest {
     }
     @Test(expected = IllegalStateException.class)
     public void testPopFromEmptyQueueThrowsException() {
-        // Arrange: create an empty queue
         PositionalPushbackReader.IntQueue queue = new PositionalPushbackReader.IntQueue();
-
-        // Act: try to pop from the empty queue (should throw IllegalStateException)
         queue.pop();
     }
 

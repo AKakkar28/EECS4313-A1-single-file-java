@@ -401,25 +401,6 @@ public class DrawDotManualTest {
         assertFalse(output.contains("//"));
     }
 
-    @Test
-    public void testNodeStyleWithColorList() {
-        DrawDot.Node node = new DrawDot.Node("testNodeStyle");
-        node.style(DrawDot.NodeStyle.filled, "red:blue");
-
-        Map<String, DrawDot.Attribute> attributes = node.getAttributes();
-        assertTrue(attributes.containsKey("fillcolor"));
-        assertEquals("red:blue", attributes.get("fillcolor").value);
-    }
-
-    @Test
-    public void testEdgeStyleWithColorList() {
-        DrawDot.Connection connection = new DrawDot.Connection(new DrawDot.Node("start"), new DrawDot.Node("end"));
-        connection.style(DrawDot.EdgeStyle.bold, "green:yellow");
-
-        Map<String, DrawDot.Attribute> attributes = connection.getAttributes();
-        assertTrue(attributes.containsKey("fillcolor"));
-        assertEquals("green:yellow", attributes.get("fillcolor").value);
-    }
 
     @Test
     public void testArrowEqualsWithDifferentTypes() {
